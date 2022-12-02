@@ -18,11 +18,6 @@ export class CreateBookPresenter {
       },
       {
         type: 'input',
-        name: 'startDate',
-        message: 'What is the start date of the book?',
-      },
-      {
-        type: 'input',
         name: 'currentPage',
         message: 'What is the current page of the book?',
       },

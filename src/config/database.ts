@@ -12,7 +12,7 @@ database.serialize(() => {
   );
 
   database.run(
-    'CREATE TABLE IF NOT EXISTS readings (id INTEGER PRIMARY KEY AUTOINCREMENT, book_id INTEGER, date DATE, pages_read INTEGER, time TEXT, FOREIGN KEY(book_id) REFERENCES books(id))',
+    'CREATE TABLE IF NOT EXISTS readings (id INTEGER PRIMARY KEY AUTOINCREMENT, book_id INTEGER, date DATE, pages_read INTEGER, time TEXT, FOREIGN KEY(book_id) REFERENCES books(id) ON DELETE CASCADE)',
   );
 
   console.log('Database initialized');

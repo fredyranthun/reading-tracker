@@ -14,6 +14,18 @@ export class BookRepository {
     ]);
   }
 
+  async find(id: number): Promise<Book> {
+    return new Promise((resolve, reject) => {
+      this.database.get('SELECT * FROM books WHERE id = ?', [id], (err, row) => {
+        if (err) {
+          reject(err);
+        }
+
+        resolve(this.mapRowToBook(row));
+      });
+    });
+  }
+
   async list(): Promise<Book[]> {
     return new Promise((resolve, reject) => {
       this.database.all('SELECT * FROM books', (err, rows) => {
@@ -26,6 +38,18 @@ export class BookRepository {
         resolve(books);
       });
     });
+  }
+
+  async update(id: number, currentPage: number): Promise<void> {
+    this.database.run('UPDATE books SET current_page = ? WHERE id = ?', [currentPage, id]);
+  }
+
+  async delete(id: number): Promise<void> {
+    this.database.run('DELETE FROM books WHERE id = ?', [id]);
+  }
+
+  async createReading(bookId: number, date: string, pagesRead: number, time: string): Promise<void> {
+    this.database.run('INSERT INTO readings (book_id, date, pages_read, time) VALUES (?, ?, ?, ?)', [bookId, date, pagesRead, time]);
   }
 
   private mapRowToBook(row: BookRow): Book {

@@ -7,7 +7,7 @@ export class ListBooksPresenter {
   async present() {
     const books = await this.listBooks.execute();
 
-    console.table(books.map(this.formatBook));
+    this.showTable(books.map(this.formatBook));
   }
 
   private formatBook(book: Book) {
@@ -19,5 +19,14 @@ export class ListBooksPresenter {
       'Current page': book.currentPage,
       'Total pages': book.totalPages,
     };
+  }
+
+  private showTable(array: Array<any>) {
+    const transformed = array.reduce((acc, { id, ...x }) => {
+      acc[id] = x;
+      return acc;
+    }, {});
+
+    console.table(transformed);
   }
 }

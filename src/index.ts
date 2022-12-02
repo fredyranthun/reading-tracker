@@ -7,7 +7,7 @@ import './config/database';
 import './config/container';
 
 import { database } from '@/config/database';
-import { createBook, listBooks } from '@/config/container';
+import { createBook, listBooks, deleteBook, updateCurrentPage } from '@/config/container';
 
 async function main() {
   while (true) {
@@ -16,24 +16,28 @@ async function main() {
         type: 'list',
         name: 'action',
         message: 'What do you want to do?',
-        choices: ['Create a new book', 'List all books', 'Exit'],
+        choices: ['Create a new book', 'List all books', 'Delete a book', 'Update current Book page', 'Exit'],
       },
     ]);
 
-    if (awnswer.action === 'List all books') {
-      await listBooks.present();
-    }
-
-    if (awnswer.action === 'Create a new book') {
-      await createBook.present();
-    }
-
-    if (awnswer.action === 'Exit') {
-      break;
+    switch (awnswer.action) {
+      case 'Create a new book':
+        await createBook.present();
+        break;
+      case 'List all books':
+        await listBooks.present();
+        break;
+      case 'Delete a book':
+        await deleteBook.present();
+        break;
+      case 'Update current Book page':
+        await updateCurrentPage.present();
+        break;
+      case 'Exit':
+        await database.close();
+        process.exit(0);
     }
   }
-
-  database.close();
 }
 
 main();
