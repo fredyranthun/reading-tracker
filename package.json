@@ -1,0 +1,36 @@
+{
+  "name": "reading-tracker",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./lib/index.js",
+  "bin": {
+    "reading-tracker": "./lib/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "start": "npm run build && node lib/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "local": "npm i -g && reading-tracker"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^18.11.10",
+    "@typescript-eslint/eslint-plugin": "^5.45.0",
+    "@typescript-eslint/parser": "^5.45.0",
+    "eslint": "^8.28.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-config-standard": "^17.0.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-n": "^15.5.1",
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-promise": "^6.1.1",
+    "typescript": "^4.9.3"
+  },
+  "dependencies": {
+    "@types/inquirer": "^9.0.3",
+    "inquirer": "^8.2.5",
+    "sqlite3": "^5.1.2"
+  }
+}
