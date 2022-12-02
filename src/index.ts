@@ -1,17 +1,13 @@
 #!/usr/bin/env node
 
-import './config/database';
-import { database } from './config/database';
 import inquirer from 'inquirer';
 
-import { BookRepository } from './repositories';
-import { CreateBookUseCase, ListBooksUseCase } from './use-cases';
-import { ListBooksPresenter } from './presenters';
+import './config/module-alias';
+import './config/database';
+import './config/container';
 
-const bookRepository = new BookRepository(database);
-const createBookUseCase = new CreateBookUseCase(bookRepository);
-const listBooksUseCase = new ListBooksUseCase(bookRepository);
-const listBooksPresenter = new ListBooksPresenter(listBooksUseCase);
+import { database } from '@/config/database';
+import { createBook, listBooks } from '@/config/container';
 
 async function main() {
   while (true) {
@@ -25,45 +21,11 @@ async function main() {
     ]);
 
     if (awnswer.action === 'List all books') {
-      await listBooksPresenter.present();
+      await listBooks.present();
     }
 
     if (awnswer.action === 'Create a new book') {
-      const awnswer = await inquirer.prompt([
-        {
-          type: 'input',
-          name: 'title',
-          message: 'What is the title of the book?',
-        },
-        {
-          type: 'input',
-          name: 'author',
-          message: 'Who is the author of the book?',
-        },
-        {
-          type: 'input',
-          name: 'startDate',
-          message: 'What is the start date of the book?',
-        },
-        {
-          type: 'input',
-          name: 'currentPage',
-          message: 'What is the current page of the book?',
-        },
-        {
-          type: 'input',
-          name: 'totalPages',
-          message: 'What is the total pages of the book?',
-        },
-      ]);
-
-      await createBookUseCase.execute({
-        title: awnswer.title,
-        author: awnswer.author,
-        startDate: new Date().toISOString(),
-        currentPage: Number(awnswer.currentPage),
-        totalPages: Number(awnswer.totalPages),
-      });
+      await createBook.present();
     }
 
     if (awnswer.action === 'Exit') {
